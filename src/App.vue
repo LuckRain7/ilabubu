@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="wrapper">
-      <HelloWorld msg="Hello Everyone" />
+      <HelloWorld msg="Hello MengMeng" />
     </div>
   </header>
 </template>
