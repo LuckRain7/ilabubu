@@ -1,0 +1,41 @@
+# name字段是配置文件的描述
+name: 'ilabubu.com update'
+
+# on字段是触发条件
+on:
+  # 在推送到main分支时会自动运行一次
+  push:
+    branches:
+      - main
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest # 运行环境指定为最新版的 Ubuntu
+    # 步骤
+    steps:
+      # 第一步 从代码仓库获取代码
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      # 第二步 配置安装 Node 环境
+      - name: use Node.js 18
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18
+
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
+          cd ./dist
+          echo 'ilabubu.com' > CNAME
+          cd -
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          token: ${{ secrets.GITHUBTOKEN }}
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ./dist # The folder the action should deploy.
+          git-config-name: ra1n
+          git-config-email: luckrain7@foxmail.com
